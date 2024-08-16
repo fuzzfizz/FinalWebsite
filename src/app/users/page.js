@@ -5,24 +5,53 @@ import { useEffect, useState } from 'react';
 
 export default function Page() {
   const [items, setItems] = useState([]);
-  useEffect(() => {
-    async function getUsers() {
-      try {
-        const res = await fetch('https://backend-ten-murex-12.vercel.app/api/users');
-        if (!res.ok) {
-          console.error('Failed to fetch data');
-          return;
-        }
-        const data = await res.json();
-        setItems(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
+
+
+
+  async function getUsers() {
+    try {
+      const res = await fetch('https://backend-ten-murex-12.vercel.app/api/users');
+      if (!res.ok) {
+        console.error('Failed to fetch data');
+        return;
       }
+      const data = await res.json();
+      setItems(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
+  }
+
+  const handleDel = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:3000/api/users`, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+
+
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result = await res.json();
+      console.log(result);
+
+      getUsers();
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
+  };
+
+  useEffect(() => {
+
 
     getUsers()
-    const interval = setInterval(getUsers, 10000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(getUsers, 10000);
+    // return () => clearInterval(interval);
   }, []);
 
   return (
@@ -52,8 +81,8 @@ export default function Page() {
                       <td className='text-center'>{item.id}</td>
                       <td>{item.firstname}</td>
                       <td>{item.lastname}</td>
-                      <td><Link href="#" className="btn btn-warning">Edit</Link></td>
-                      <td><Link href="#" className="btn btn-danger">Del</Link></td>
+                      <td><Link href={`/users/edit/${item.id}`} className="btn btn-warning">Edit</Link></td>
+                      <td><button className="btn btn-danger" onClick={() => handleDel(item.id)}>Del</button></td>
                     </tr>
                   ))}
                 </tbody>
