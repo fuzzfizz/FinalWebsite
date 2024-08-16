@@ -1,6 +1,6 @@
+"use client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from 'next/link';
-import Modal from '../components/Modal.js'
 
 const Navbar = () => {
   return (
@@ -36,7 +36,13 @@ const Navbar = () => {
             </li>
           </ul>
           <form className="d-flex ">
-            <Modal />
+            <Link href="/signup ">
+              <button type="button" className="btn btn-outline-success me-2" >
+                Sign Up
+              </button></Link>
+            <Link href="/"><button type="button" className="btn btn-outline-success" >
+              Sign In
+            </button></Link>
           </form>
         </div>
       </div>
