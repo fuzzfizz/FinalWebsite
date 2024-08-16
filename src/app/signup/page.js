@@ -11,7 +11,7 @@ export default function Page() {
     e.preventDefault();
 
     try {
-      const res = await fetch('https://backend-ten-murex-12.vercel.app//api/users', {
+      const res = await fetch('https://backend-ten-murex-12.vercel.app/api/users', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

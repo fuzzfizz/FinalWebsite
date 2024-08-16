@@ -8,7 +8,7 @@ export default function Page() {
   useEffect(() => {
     async function getUsers() {
       try {
-        const res = await fetch('https://backend-ten-murex-12.vercel.app//api/users');
+        const res = await fetch('https://backend-ten-murex-12.vercel.app/api/users');
         if (!res.ok) {
           console.error('Failed to fetch data');
           return;
