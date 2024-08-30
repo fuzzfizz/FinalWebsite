@@ -1,7 +1,11 @@
+import BootstrapClient from "./BootstrapClient";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 const Carousel = () => {
+  <BootstrapClient />
   return (
     <div className="carousel slide" id="carouselExampleControls" data-bs-ride="carousel">
+
       <div className="carousel-inner">
         <div className="carousel-item active">
           <img src="/carousel/bear.webp" className="d-block w-100" alt="..." />

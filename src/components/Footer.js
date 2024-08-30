@@ -1,7 +1,12 @@
+import BootstrapClient from "./BootstrapClient";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 const Footer = () => {
+  <BootstrapClient />
   return (
     <footer className="bg-dark text-center text-light">
+
+
       {/* Grid container */}
       <div className="container p-3 pb-0">
         {/* Section: Social media */}

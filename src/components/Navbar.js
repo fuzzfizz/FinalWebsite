@@ -1,8 +1,34 @@
 "use client";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import BootstrapClient from './BootstrapClient';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // Remove token from localStorage
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    // Optionally, refresh the page or redirect to the home page
+    window.location.href = '/';
+  };
+
+  useEffect(() => {
+    // Check for token in localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+      router.push('/');
+    }
+    else { router.push('/signin'); }
+
+  }, []);
+
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-dark">
       <div className="container-fluid">
@@ -15,38 +41,48 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0 me-4">
             <li className="nav-item me-2">
-              <Link class="nav-link text-light" href="/">
+              <Link className="nav-link text-light" href="/">
                 Home
               </Link>
             </li>
             <li className="nav-item me-2">
-              <Link class="nav-link text-light" href="/aboutPage">
+              <Link className="nav-link text-light" href="/aboutPage">
                 About
               </Link>
             </li>
             <li className="nav-item me-2">
-              <Link class="nav-link text-light" href="/servicePage">
+              <Link className="nav-link text-light" href="/servicePage">
                 Service
               </Link>
             </li>
             <li className="nav-item me-2">
-              <Link class="nav-link text-light" href="/contractPage">
+              <Link className="nav-link text-light" href="/contractPage">
                 Contact
               </Link>
             </li>
           </ul>
-          <form className="d-flex ">
-            <Link href="/signup ">
-              <button type="button" className="btn btn-outline-success me-2" >
-                Sign Up
-              </button></Link>
-            <Link href="/"><button type="button" className="btn btn-outline-success" >
-              Sign In
-            </button></Link>
+          <form className="d-flex">
+            {isLoggedIn ? (
+              <button type="button" className="btn btn-outline-danger me-2" onClick={handleLogout}>
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link href="/signup">
+                  <button type="button" className="btn btn-outline-success me-2">
+                    Sign Up
+                  </button>
+                </Link>
+                <Link href="/signin">
+                  <button type="button" className="btn btn-outline-success">
+                    Sign In
+                  </button>
+                </Link>
+              </>
+            )}
           </form>
         </div>
       </div>
-
     </nav>
   );
 };

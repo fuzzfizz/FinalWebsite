@@ -24,7 +24,7 @@ export default function Page() {
 
   const handleDel = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/users`, {
+      const res = await fetch(`https://backend-ten-murex-12.vercel.app/api/users`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
