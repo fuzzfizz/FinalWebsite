@@ -33,8 +33,11 @@ export default function Page() {
       localStorage.setItem('token', result.token);
       alert('Login successful');
 
+      window.dispatchEvent(new Event('storage'));
+
       // Redirect to home page
       router.push('/');
+
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
       alert('Login failed: ' + error.message);

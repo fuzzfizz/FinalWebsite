@@ -13,8 +13,8 @@ const Navbar = () => {
     // Remove token from localStorage
     localStorage.removeItem('token');
     setIsLoggedIn(false);
-    // Optionally, refresh the page or redirect to the home page
-    window.location.href = '/';
+    // Redirect to the home page
+    router.push('/signin');
   };
 
   useEffect(() => {
@@ -22,12 +22,23 @@ const Navbar = () => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
-      router.push('/');
+    } else {
+      router.push('/signin');
     }
-    else { router.push('/signin'); }
 
-  }, []);
+    // Add event listener for storage changes
+    const handleStorageChange = () => {
+      const token = localStorage.getItem('token');
+      setIsLoggedIn(!!token);
+    };
 
+    window.addEventListener('storage', handleStorageChange);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [router]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-dark">
